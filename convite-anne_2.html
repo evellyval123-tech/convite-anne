@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>ANNE — Convite de Fundação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#132A4D;
+    --navy-deep:#0A1930;
+    --teal:#1DB1A3;
+    --teal-2:#20AB9E;
+    --teal-soft: rgba(29,177,163,0.16);
+    --white:#FFFFFF;
+    --ivory:#F6F8F8;
+    --ink:#0E2038;
+    --serif:'Playfair Display', serif;
+    --script:'Cormorant Garamond', serif;
+    --sans:'Poppins', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--navy);
+    color:var(--white);
+    font-family:var(--sans);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img,svg{display:block;}
+
+  /* ---------- CAPA / ANIMAÇÃO DE ABERTURA ---------- */
+  .intro-mark{ width:190px; height:auto; position:relative; margin:0 auto; }
+  .intro-mark svg{ width:100%; height:auto; overflow:visible; }
+  .mark-circle{ transform-origin:456px 70px; opacity:0; transform:translateY(-40px) scale(.6); }
+  .mark-white{ opacity:0; transform:translateY(60px); }
+  .mark-teal-main{ opacity:0; transform:translateY(60px); }
+  .mark-teal-wave, .mark-teal-tail1, .mark-teal-tail2{ opacity:0; transform:translateX(-30px); }
+  .intro-mark.play .mark-circle{ animation:markDrop .6s cubic-bezier(.2,.8,.3,1.1) .95s forwards; }
+  .intro-mark.play .mark-white{ animation:markRise .8s cubic-bezier(.2,.7,.2,1) 1.25s forwards; }
+  .intro-mark.play .mark-teal-main{ animation:markRise .8s cubic-bezier(.2,.7,.2,1) 1.45s forwards; }
+  .intro-mark.play .mark-teal-wave{ animation:markSweep .7s ease 1.75s forwards; }
+  .intro-mark.play .mark-teal-tail1{ animation:markSweep .5s ease 1.95s forwards; }
+  .intro-mark.play .mark-teal-tail2{ animation:markSweep .5s ease 2s forwards; }
+  @keyframes markDrop{ to{ opacity:1; transform:translateY(0) scale(1);} }
+  @keyframes markRise{ to{ opacity:1; transform:translateY(0);} }
+  @keyframes markSweep{ to{ opacity:1; transform:translateX(0);} }
+
+  /* people converging — "gente" becoming ANNE */
+  .people-dots{ position:absolute; inset:0; pointer-events:none; }
+  .people-dots .dot{
+    position:absolute; left:49.5%; top:8.5%; width:7px; height:7px; border-radius:50%;
+    transform:translate(var(--dx), var(--dy)) scale(1); opacity:0;
+  }
+  .people-dots.play .dot{
+    animation:dotConverge .85s cubic-bezier(.3,.7,.2,1) forwards;
+    animation-delay:var(--dl, 0s);
+  }
+  @keyframes dotConverge{
+    0%{ opacity:0; transform:translate(var(--dx), var(--dy)) scale(1); }
+    18%{ opacity:.9; }
+    70%{ opacity:.6; }
+    100%{ opacity:0; transform:translate(0,0) scale(.15); }
+  }
+
+  .intro-word{
+    margin:26px auto 0; max-width:300px; text-align:center;
+  }
+  .intro-eyebrow{
+    font-family:var(--sans); font-size:10px; letter-spacing:4px; color:rgba(255,255,255,.5);
+    text-transform:uppercase; margin-bottom:10px; opacity:0;
+  }
+  .intro-mark.play .intro-eyebrow{ animation:fadeUp .8s ease 2.05s forwards; }
+
+  .intro-title{
+    font-family:var(--serif); font-weight:900; font-size:54px; letter-spacing:3px; color:var(--white);
+    line-height:1; opacity:0; transform:scale(.9) translateY(8px);
+    text-shadow:0 0 36px rgba(29,177,163,.35);
+  }
+  .intro-mark.play .intro-title{ animation:titleEmphasis 1s cubic-bezier(.2,.7,.15,1.05) 2.25s forwards; }
+  @keyframes titleEmphasis{ to{ opacity:1; transform:scale(1) translateY(0); } }
+
+  .intro-subtitle{
+    font-family:var(--script); font-style:italic; font-weight:500; font-size:21px; color:var(--teal);
+    margin-top:10px; opacity:0; transform:translateY(10px);
+  }
+  .intro-mark.play .intro-subtitle{ animation:fadeUp .8s ease 2.65s forwards; }
+
+  .intro-tagline-small{
+    font-size:9.5px; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,.4);
+    margin-top:16px; opacity:0;
+  }
+  .intro-mark.play .intro-tagline-small{ animation:fadeUp .8s ease 2.95s forwards; }
+
+  .intro-anchor{
+    margin-top:22px; padding-top:18px; border-top:1px solid rgba(255,255,255,.14);
+    font-size:12px; letter-spacing:.5px; color:rgba(255,255,255,.7); font-weight:400;
+    opacity:0;
+  }
+  .intro-anchor strong{ color:var(--teal); font-weight:600; }
+  .intro-mark.play .intro-anchor{ animation:fadeUp .8s ease 3.2s forwards; }
+
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- LAYOUT ---------- */
+  section{ position:relative; padding:88px 28px; }
+  .container{ max-width:520px; margin:0 auto; }
+
+  .fade-el{ opacity:0; transform:translateY(24px); transition:opacity .9s ease, transform .9s ease; }
+  .fade-el.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- HERO ---------- */
+  #hero{
+    position:relative;
+    min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:90px 28px; overflow:hidden;
+  }
+  #network{ position:absolute; inset:0; z-index:0; opacity:.22; }
+  .hero-bleed{ position:absolute; z-index:0; pointer-events:none; }
+  .hero-bleed svg{ width:100%; height:auto; display:block; }
+  .hero-bleed.top{ width:400px; top:-190px; right:-150px; transform:rotate(178deg); opacity:.28; }
+  .hero-bleed.bottom{ width:460px; bottom:-230px; left:-190px; opacity:.28; }
+  .hero-dot{ position:absolute; border-radius:50%; background:var(--teal); z-index:0; pointer-events:none; }
+  .hero-dot.d1{ width:16px; height:16px; top:26%; right:-6px; opacity:.55; }
+  .hero-dot.d2{ width:7px; height:7px; bottom:22%; left:9%; opacity:.4; }
+  .hero-dot.d3{ width:5px; height:5px; top:14%; left:16%; opacity:.3; }
+  .hero-content{ position:relative; z-index:1; }
+  .eyebrow{
+    font-size:11px; letter-spacing:5px; text-transform:uppercase; color:var(--teal);
+    margin-bottom:30px; font-weight:500; opacity:0;
+  }
+  .eyebrow.play{ animation:fadeUp .8s ease .1s forwards; }
+
+  .scroll-cue{
+    margin-top:44px; display:flex; flex-direction:column; align-items:center; gap:8px;
+    font-size:10px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.5);
+    opacity:0;
+  }
+  .scroll-cue.play{ animation:fadeUp 1s ease 3.6s forwards; }
+  .scroll-cue .line{ width:1px; height:34px; background:linear-gradient(var(--teal), transparent); animation:pulseLine 2s ease-in-out infinite; }
+  @keyframes pulseLine{ 0%,100%{opacity:.3;} 50%{opacity:1;} }
+
+  /* ---------- CONVOCAÇÃO ---------- */
+  #convite{ background:var(--ivory); color:var(--ink); }
+  .kicker{
+    font-size:11px; letter-spacing:4px; text-transform:uppercase; color:var(--teal-2); font-weight:600;
+    margin-bottom:18px;
+  }
+  .lede{
+    font-family:var(--serif); font-weight:700; font-size:26px; line-height:1.4; color:var(--navy);
+  }
+  .body-copy{
+    margin-top:22px; font-size:15.5px; line-height:1.85; color:#3c4a5c; font-weight:300;
+  }
+  .pull-quote{
+    margin-top:34px; padding-left:20px; border-left:2px solid var(--teal);
+    font-family:var(--script); font-style:italic; font-size:19px; color:var(--navy); line-height:1.6;
+  }
+
+  /* ---------- AGENDA ---------- */
+  #agenda{ background:var(--navy); }
+  .section-head{ text-align:center; margin-bottom:52px; }
+  .section-head .kicker{ color:var(--teal); }
+  .section-head h2{ font-family:var(--serif); font-weight:700; font-size:28px; }
+  .agenda-item{
+    display:flex; gap:20px; padding:26px 0; border-top:1px solid rgba(255,255,255,.12);
+  }
+  .agenda-item:last-child{ border-bottom:1px solid rgba(255,255,255,.12); }
+  .agenda-num{
+    font-family:var(--serif); font-style:italic; font-size:22px; color:var(--teal); min-width:34px;
+  }
+  .agenda-text h3{
+    font-family:var(--sans); font-weight:600; font-size:15.5px; margin-bottom:6px; letter-spacing:.2px;
+  }
+  .agenda-text p{ font-size:13.5px; line-height:1.65; color:rgba(255,255,255,.65); font-weight:300; }
+
+  /* ---------- PILARES ---------- */
+  #pilares{ background:var(--ivory); color:var(--ink); }
+  .pilar-grid{ display:flex; flex-direction:column; gap:18px; }
+  .pilar-card{
+    background:var(--white); border-radius:4px; padding:28px 26px;
+    border:1px solid rgba(19,42,77,.08); box-shadow:0 18px 40px -28px rgba(19,42,77,.35);
+  }
+  .pilar-icon{ width:34px; height:34px; margin-bottom:16px; }
+  .pilar-card h3{
+    font-family:var(--serif); font-weight:700; font-size:18px; color:var(--navy); margin-bottom:8px;
+    letter-spacing:.3px;
+  }
+  .pilar-card p{ font-size:13.5px; line-height:1.7; color:#5a6879; font-weight:300; }
+
+  /* ---------- DETALHES ---------- */
+  #detalhes{ background:var(--navy-deep); }
+  .detail-card{
+    background:linear-gradient(155deg, rgba(29,177,163,.10), rgba(255,255,255,.02));
+    border:1px solid rgba(29,177,163,.35);
+    border-radius:6px; padding:38px 30px; position:relative; overflow:hidden;
+  }
+  .detail-card::before{
+    content:''; position:absolute; top:-40px; right:-40px; width:140px; height:140px;
+    background:var(--teal); opacity:.08; border-radius:50%;
+  }
+  .detail-row{ display:flex; gap:16px; padding:16px 0; border-bottom:1px solid rgba(255,255,255,.1); }
+  .detail-row:last-of-type{ border-bottom:none; }
+  .detail-label{
+    min-width:78px; font-size:10.5px; letter-spacing:2px; text-transform:uppercase; color:var(--teal);
+    font-weight:600; padding-top:2px;
+  }
+  .detail-value{ font-size:15px; line-height:1.55; font-weight:400; }
+  .detail-value small{ display:block; font-size:12.5px; color:rgba(255,255,255,.55); margin-top:3px; font-weight:300;}
+  .cta-row{ display:flex; gap:12px; margin-top:28px; flex-wrap:wrap; }
+  .btn{
+    flex:1; min-width:140px; text-align:center; padding:14px 18px; border-radius:3px;
+    font-size:12.5px; letter-spacing:1.5px; text-transform:uppercase; font-weight:600;
+    text-decoration:none; transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .btn-primary{ background:var(--teal); color:var(--navy-deep); }
+  .btn-primary:active{ transform:scale(.97); }
+  .btn-secondary{ background:transparent; border:1px solid rgba(255,255,255,.35); color:var(--white); }
+  .btn-secondary:active{ transform:scale(.97); }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy); text-align:center; padding:70px 28px 54px; position:relative; overflow:hidden;
+  }
+  .footer-mark{ width:56px; margin:0 auto 22px; opacity:.9; }
+  .footer-mark svg{ width:100%; }
+  footer .brand-line{
+    font-family:var(--serif); font-style:italic; font-size:15px; color:var(--teal); letter-spacing:.3px;
+  }
+  footer .insta{
+    margin-top:22px; font-size:12px; letter-spacing:1.5px; color:rgba(255,255,255,.55);
+  }
+  .footer-bg-mark{
+    position:absolute; bottom:-40px; right:-60px; width:220px; opacity:.05; z-index:0;
+  }
+
+  @media (min-width:600px){
+    h1.brand{ font-size:68px; }
+    .lede{ font-size:29px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= MAIN ================= -->
+<main id="main">
+
+  <!-- CAPA / ABERTURA -->
+  <section id="hero">
+    <canvas id="network"></canvas>
+
+    <div class="hero-bleed top">
+      <svg viewBox="0 0 921 830" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#FFFFFF"><path d="M467 158 C430 157, 384 181, 334 237 C276 302, 220 393, 175 488 C135 572, 112 651, 109 724 L289 724 C298 625, 312 527, 336 427 C360 328, 392 235, 431 179 C444 161, 457 158, 467 158 Z"/></g>
+        <g fill="#1DB1A3">
+          <path d="M486 165 C520 163, 565 202, 615 268 C692 370, 759 511, 799 721 L618 721 C605 646, 595 588, 584 531 C574 477, 561 430, 546 386 C527 331, 504 278, 476 226 C463 202, 460 186, 468 175 C473 168, 479 165, 486 165 Z"/>
+          <path d="M327 499 C398 476, 497 466, 584 474 C591 475, 596 481, 597 489 L603 523 C520 512, 417 516, 327 532 Z"/>
+        </g>
+      </svg>
+    </div>
+    <div class="hero-bleed bottom">
+      <svg viewBox="0 0 921 830" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#FFFFFF"><path d="M467 158 C430 157, 384 181, 334 237 C276 302, 220 393, 175 488 C135 572, 112 651, 109 724 L289 724 C298 625, 312 527, 336 427 C360 328, 392 235, 431 179 C444 161, 457 158, 467 158 Z"/></g>
+        <g fill="#1DB1A3">
+          <path d="M486 165 C520 163, 565 202, 615 268 C692 370, 759 511, 799 721 L618 721 C605 646, 595 588, 584 531 C574 477, 561 430, 546 386 C527 331, 504 278, 476 226 C463 202, 460 186, 468 175 C473 168, 479 165, 486 165 Z"/>
+          <path d="M28 680 C53 655, 82 635, 116 620 C112 630, 110 640, 109 651 C80 659, 52 670, 28 680 Z"/>
+        </g>
+      </svg>
+    </div>
+    <span class="hero-dot d1"></span>
+    <span class="hero-dot d2"></span>
+    <span class="hero-dot d3"></span>
+
+    <div class="hero-content">
+      <div class="eyebrow" id="coverEyebrow">Convite especial</div>
+
+      <div class="intro-mark" id="introMark">
+        <div class="people-dots" id="peopleDots"></div>
+        <svg viewBox="0 0 921 830" xmlns="http://www.w3.org/2000/svg">
+          <g class="mark-white" fill="#FFFFFF">
+            <path d="M467 158 C430 157, 384 181, 334 237 C276 302, 220 393, 175 488 C135 572, 112 651, 109 724 L289 724 C298 625, 312 527, 336 427 C360 328, 392 235, 431 179 C444 161, 457 158, 467 158 Z"/>
+          </g>
+          <g fill="#1DB1A3">
+            <path class="mark-teal-main" d="M486 165 C520 163, 565 202, 615 268 C692 370, 759 511, 799 721 L618 721 C605 646, 595 588, 584 531 C574 477, 561 430, 546 386 C527 331, 504 278, 476 226 C463 202, 460 186, 468 175 C473 168, 479 165, 486 165 Z"/>
+            <path class="mark-teal-wave" d="M327 499 C398 476, 497 466, 584 474 C591 475, 596 481, 597 489 L603 523 C520 512, 417 516, 327 532 Z"/>
+            <path class="mark-teal-tail1" d="M28 680 C53 655, 82 635, 116 620 C112 630, 110 640, 109 651 C80 659, 52 670, 28 680 Z"/>
+            <path class="mark-teal-tail2" d="M790 613 C831 633, 865 657, 893 681 C859 669, 827 653, 798 637 Z"/>
+            <circle class="mark-circle" cx="456.5" cy="69.5" r="40.5"/>
+          </g>
+        </svg>
+        <div class="intro-word">
+          <div class="intro-eyebrow">Pessoas que estão construindo</div>
+          <div class="intro-title">ANNE</div>
+          <div class="intro-subtitle">Gente e Gestão</div>
+          <div class="intro-tagline-small">Conectar · Capacitar · Transformar</div>
+          <div class="intro-anchor">Ato de Fundação · <strong>14 de agosto de 2026</strong></div>
+        </div>
+      </div>
+
+      <div class="scroll-cue" id="scrollCue"><span class="line"></span>role para ver o convite</div>
+    </div>
+  </section>
+
+  <!-- CONVOCAÇÃO -->
+  <section id="convite">
+    <div class="container">
+      <div class="kicker fade-el">Convite</div>
+      <p class="lede fade-el">Você foi convidado(a) para estar entre as lideranças que vão fundar a ANNE.</p>
+      <div class="body-copy fade-el">
+        <p>A Associação Norte e Nordeste de Gente e Gestão nasce para conectar pessoas, organizações e comunidades — promovendo capacitação, fortalecendo o networking e ampliando a representatividade da gestão de pessoas nas regiões Norte e Nordeste.</p>
+      </div>
+      <div class="pull-quote fade-el">Uma associação sólida, relevante e transformadora — construída, desde o primeiro dia, por quem vai liderá-la.</div>
+    </div>
+  </section>
+
+  <!-- AGENDA -->
+  <section id="agenda">
+    <div class="container">
+      <div class="section-head fade-el">
+        <div class="kicker">O que acontecerá</div>
+        <h2>Momentos da fundação</h2>
+      </div>
+
+      <div class="agenda-item fade-el">
+        <div class="agenda-num">01</div>
+        <div class="agenda-text">
+          <h3>Apresentação do propósito</h3>
+          <p>A missão da ANNE e o porquê de sua criação para o ecossistema de gente e gestão do Norte e Nordeste.</p>
+        </div>
+      </div>
+      <div class="agenda-item fade-el">
+        <div class="agenda-num">02</div>
+        <div class="agenda-text">
+          <h3>Pilares e governança</h3>
+          <p>Objetivos estratégicos e estrutura de governança que o Conselho irá conduzir a partir de agora.</p>
+        </div>
+      </div>
+      <div class="agenda-item fade-el">
+        <div class="agenda-num">03</div>
+        <div class="agenda-text">
+          <h3>Assinatura do Estatuto Social</h3>
+          <p>O ato formal que constitui a associação, com a assinatura dos membros do Conselho.</p>
+        </div>
+      </div>
+      <div class="agenda-item fade-el">
+        <div class="agenda-num">04</div>
+        <div class="agenda-text">
+          <h3>Próximos passos</h3>
+          <p>O compromisso com a construção contínua da ANNE, junto às lideranças fundadoras.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILARES -->
+  <section id="pilares">
+    <div class="container">
+      <div class="section-head fade-el">
+        <div class="kicker">Propósito</div>
+        <h2>Conectar, capacitar, transformar</h2>
+      </div>
+      <div class="pilar-grid">
+        <div class="pilar-card fade-el">
+          <svg class="pilar-icon" viewBox="0 0 48 48" fill="none"><circle cx="12" cy="14" r="4" stroke="#1DB1A3" stroke-width="2.4"/><circle cx="36" cy="12" r="3" stroke="#1DB1A3" stroke-width="2.4"/><circle cx="34" cy="34" r="4" stroke="#1DB1A3" stroke-width="2.4"/><circle cx="12" cy="36" r="3" stroke="#1DB1A3" stroke-width="2.4"/><path d="M15 16L30 13M14 18L31 32M15 34L31 12" stroke="#1DB1A3" stroke-width="2"/></svg>
+          <h3>Conectar</h3>
+          <p>Promovemos redes e parcerias que geram valor e pertencimento entre pessoas e organizações.</p>
+        </div>
+        <div class="pilar-card fade-el">
+          <svg class="pilar-icon" viewBox="0 0 48 48" fill="none"><path d="M24 12C19 9 12 9 7 11V35C12 33 19 33 24 36C29 33 36 33 41 35V11C36 9 29 9 24 12Z" stroke="#1DB1A3" stroke-width="2.2" stroke-linejoin="round"/><path d="M24 12V36" stroke="#1DB1A3" stroke-width="2.2"/></svg>
+          <h3>Capacitar</h3>
+          <p>Desenvolvemos pessoas e lideranças preparadas para os desafios de gestão do futuro.</p>
+        </div>
+        <div class="pilar-card fade-el">
+          <svg class="pilar-icon" viewBox="0 0 48 48" fill="none"><path d="M6 34L18 22L26 28L42 10" stroke="#1DB1A3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 10H42V20" stroke="#1DB1A3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Transformar</h3>
+          <p>Impulsionamos mudanças positivas em organizações e no ecossistema de gente e gestão.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETALHES -->
+  <section id="detalhes">
+    <div class="container">
+      <div class="section-head fade-el">
+        <div class="kicker">Fundação da ANNE</div>
+        <h2>Informações do encontro</h2>
+      </div>
+      <div class="detail-card fade-el">
+        <div class="detail-row">
+          <div class="detail-label">Data</div>
+          <div class="detail-value">14 de agosto de 2026<small>Sexta-feira</small></div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Horário</div>
+          <div class="detail-value">12h às 15h</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Local</div>
+          <div class="detail-value">Restaurante Marechal<small>Av. Hermes da Fonseca, 880 — Empresarial Hermes 880, Tirol, Natal/RN</small></div>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" id="calBtn" href="#">Adicionar ao calendário</a>
+          <a class="btn btn-secondary" id="mapBtn" href="#" target="_blank" rel="noopener">Ver localização</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <svg class="footer-bg-mark" viewBox="0 0 921 830" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#FFFFFF"><path d="M467 158 C430 157, 384 181, 334 237 C276 302, 220 393, 175 488 C135 572, 112 651, 109 724 L289 724 C298 625, 312 527, 336 427 C360 328, 392 235, 431 179 C444 161, 457 158, 467 158 Z"/></g>
+      <g fill="#1DB1A3">
+        <path d="M486 165 C520 163, 565 202, 615 268 C692 370, 759 511, 799 721 L618 721 C605 646, 595 588, 584 531 C574 477, 561 430, 546 386 C527 331, 504 278, 476 226 C463 202, 460 186, 468 175 C473 168, 479 165, 486 165 Z"/>
+        <circle cx="456.5" cy="69.5" r="40.5"/>
+      </g>
+    </svg>
+    <div class="footer-mark">
+      <svg viewBox="0 0 921 830" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#FFFFFF"><path d="M467 158 C430 157, 384 181, 334 237 C276 302, 220 393, 175 488 C135 572, 112 651, 109 724 L289 724 C298 625, 312 527, 336 427 C360 328, 392 235, 431 179 C444 161, 457 158, 467 158 Z"/></g>
+        <g fill="#1DB1A3">
+          <path d="M486 165 C520 163, 565 202, 615 268 C692 370, 759 511, 799 721 L618 721 C605 646, 595 588, 584 531 C574 477, 561 430, 546 386 C527 331, 504 278, 476 226 C463 202, 460 186, 468 175 C473 168, 479 165, 486 165 Z"/>
+          <circle cx="456.5" cy="69.5" r="40.5"/>
+        </g>
+      </svg>
+    </div>
+    <div class="brand-line">Conectar. Capacitar. Transformar.</div>
+    <div class="insta">@anne.gente</div>
+  </footer>
+
+</main>
+
+<script>
+  // ---- Intro / cover sequence ----
+  var introMark = document.getElementById('introMark');
+  var peopleDots = document.getElementById('peopleDots');
+  var coverEyebrow = document.getElementById('coverEyebrow');
+  var scrollCue = document.getElementById('scrollCue');
+  var played = false;
+
+  // build a small cluster of "people" dots scattered around the point
+  // where the mark's head will appear, so they read as individuals
+  // converging together to form the ANNE symbol.
+  (function buildDots(){
+    var n = 11;
+    for(var i=0;i<n;i++){
+      var angle = (Math.PI*2/n)*i + Math.random()*0.4;
+      var radius = 70 + Math.random()*55;
+      var dx = Math.cos(angle)*radius;
+      var dy = Math.sin(angle)*radius*0.8 - 10;
+      var dot = document.createElement('span');
+      dot.className = 'dot';
+      dot.style.setProperty('--dx', dx.toFixed(1)+'px');
+      dot.style.setProperty('--dy', dy.toFixed(1)+'px');
+      dot.style.setProperty('--dl', (Math.random()*0.35).toFixed(2)+'s');
+      dot.style.background = (i % 2 === 0) ? '#1DB1A3' : '#FFFFFF';
+      peopleDots.appendChild(dot);
+    }
+  })();
+
+  function startIntro(){
+    if(played) return;
+    played = true;
+    coverEyebrow.classList.add('play');
+    introMark.classList.add('play');
+    peopleDots.classList.add('play');
+    scrollCue.classList.add('play');
+  }
+
+  window.addEventListener('load', function(){ setTimeout(startIntro, 250); });
+
+  // ---- Scroll reveal ----
+  var els = document.querySelectorAll('.fade-el');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold:0.18 });
+  els.forEach(function(el){ io.observe(el); });
+
+  // ---- Ambient network canvas (hero only) ----
+  (function(){
+    var canvas = document.getElementById('network');
+    if(!canvas) return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ return; }
+    var ctx = canvas.getContext('2d');
+    var hero = document.getElementById('hero');
+    var w,h,dots=[];
+    function resize(){
+      w = canvas.width = hero.offsetWidth;
+      h = canvas.height = hero.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    var count = Math.max(18, Math.floor((w*h)/38000));
+    for(var i=0;i<count;i++){
+      dots.push({
+        x:Math.random()*w, y:Math.random()*h,
+        vx:(Math.random()-0.5)*0.18, vy:(Math.random()-0.5)*0.18
+      });
+    }
+    function tick(){
+      ctx.clearRect(0,0,w,h);
+      for(var i=0;i<dots.length;i++){
+        var d = dots[i];
+        d.x += d.vx; d.y += d.vy;
+        if(d.x<0||d.x>w) d.vx*=-1;
+        if(d.y<0||d.y>h) d.vy*=-1;
+      }
+      for(var i=0;i<dots.length;i++){
+        for(var j=i+1;j<dots.length;j++){
+          var a=dots[i], b=dots[j];
+          var dx=a.x-b.x, dy=a.y-b.y;
+          var dist = Math.sqrt(dx*dx+dy*dy);
+          if(dist < 130){
+            ctx.strokeStyle = 'rgba(29,177,163,' + (0.16*(1-dist/130)) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          }
+        }
+      }
+      for(var i=0;i<dots.length;i++){
+        ctx.fillStyle = 'rgba(255,255,255,0.35)';
+        ctx.beginPath(); ctx.arc(dots[i].x, dots[i].y, 1.6, 0, Math.PI*2); ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+
+  // ---- Calendar + Map links ----
+  (function(){
+    var address = "Av. Hermes da Fonseca, 880, Empresarial Hermes 880, Tirol, Natal - RN";
+    var mapUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Restaurante Marechal, " + address);
+    document.getElementById('mapBtn').href = mapUrl;
+
+    var title = "Fundação da ANNE — Associação Norte e Nordeste de Gente e Gestão";
+    var details = "Apresentação do propósito, pilares estratégicos, governança e assinatura do Estatuto Social da ANNE.";
+    var location = "Restaurante Marechal, " + address;
+    var dtStart = "20260814T120000";
+    var dtEnd = "20260814T150000";
+
+    var ics = [
+      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//ANNE//Convite//PT-BR","BEGIN:VEVENT",
+      "UID:" + Date.now() + "@anne.gente",
+      "DTSTART:" + dtStart,
+      "DTEND:" + dtEnd,
+      "SUMMARY:" + title,
+      "DESCRIPTION:" + details,
+      "LOCATION:" + location,
+      "END:VEVENT","END:VCALENDAR"
+    ].join("\r\n");
+
+    var blob = new Blob([ics], {type:"text/calendar"});
+    var url = URL.createObjectURL(blob);
+    var calBtn = document.getElementById('calBtn');
+    calBtn.href = url;
+    calBtn.setAttribute('download', 'fundacao-anne.ics');
+  })();
+</script>
+</body>
+</html>
